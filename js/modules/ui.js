@@ -189,6 +189,7 @@ export function renderAccounts(accounts, currentSearchQuery, onCopy, onReorder, 
                 window.removeEventListener('mouseup', onSwipeEnd);
                 window.removeEventListener('touchmove', onSwipeMove);
                 window.removeEventListener('touchend', onSwipeEnd);
+                if (rafId) cancelAnimationFrame(rafId);
 
                 // Remove blocker with delay to prevent context menu from showing up after mouseup
                 setTimeout(() => {
@@ -217,10 +218,11 @@ export function renderAccounts(accounts, currentSearchQuery, onCopy, onReorder, 
 
             const onSwipeEnd = handleSwipeEnd;
 
+            let rafId = null;
             const onSwipeMove = (e) => {
                 if (!checkSwipe) return;
 
-                // Stop if right button released
+                // Stop if right button released 
                 if (e.buttons !== undefined && (e.buttons & 2) === 0 && e.type.startsWith('mouse')) {
                     handleSwipeEnd();
                     return;
@@ -237,14 +239,17 @@ export function renderAccounts(accounts, currentSearchQuery, onCopy, onReorder, 
 
                 if (isSwiping) {
                     if (e.cancelable) e.preventDefault();
-                    item.style.transform = `translateX(${moveX}px)`;
-                    if (moveX > 0) {
-                        editAction.style.opacity = Math.min(moveX / 60, 1);
-                        deleteAction.style.opacity = 0;
-                    } else {
-                        deleteAction.style.opacity = Math.min(Math.abs(moveX) / 60, 1);
-                        editAction.style.opacity = 0;
-                    }
+                    if (rafId) cancelAnimationFrame(rafId);
+                    rafId = requestAnimationFrame(() => {
+                        item.style.transform = `translateX(${moveX}px)`;
+                        if (moveX > 0) {
+                            editAction.style.opacity = Math.min(moveX / 60, 1);
+                            deleteAction.style.opacity = 0;
+                        } else {
+                            deleteAction.style.opacity = Math.min(Math.abs(moveX) / 60, 1);
+                            editAction.style.opacity = 0;
+                        }
+                    });
                 }
             };
 
@@ -385,7 +390,7 @@ export function openSettings() {
 export function closeSettings() {
     const modal = document.getElementById('settingsModal');
     modal.classList.remove('active');
-    setTimeout(() => modal.style.display = 'none', 300);
+    setTimeout(() => modal.style.display = 'none', 200);
 }
 
 export function setModalError(message, type = 'error') {

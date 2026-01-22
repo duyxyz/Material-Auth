@@ -126,10 +126,10 @@ async function handleManualAdd() {
       digits: 6
     });
 
+    UI.closeSettings();
     await saveAccounts(accounts);
     renderApp();
     UI.clearInputs(['manualName', 'manualIssuer', 'manualSecret']);
-    UI.closeSettings();
   } catch (err) {
     console.error('Manual add failed:', err);
     UI.setModalError(err.message || 'Failed to add account');
@@ -151,7 +151,7 @@ function openEditModal() {
 function closeEditModal() {
   const modal = document.getElementById('editModal');
   modal.classList.remove('active');
-  setTimeout(() => modal.style.display = 'none', 300);
+  setTimeout(() => modal.style.display = 'none', 200);
 }
 
 function handleEditSelect(index) {
@@ -270,6 +270,7 @@ function handleDeleteSelected() {
     message: `Delete ${checked.length} selected accounts?`,
     confirmText: 'Delete',
     onConfirm: async () => {
+      UI.closeConfirmModal();
       const indices = new Set(Array.from(checked).map(cb => parseInt(cb.value)));
       accounts = accounts.filter((_, idx) => !indices.has(idx));
       await saveAccounts(accounts);
@@ -292,6 +293,7 @@ async function swipeToDelete(index) {
     message: `Delete "${accounts[index].issuer || accounts[index].name}"?`,
     confirmText: 'Delete',
     onConfirm: async () => {
+      UI.closeConfirmModal();
       accounts.splice(index, 1);
       await saveAccounts(accounts);
       renderApp();
@@ -333,7 +335,7 @@ function openDeleteModal() {
 function closeDeleteModal() {
   const modal = document.getElementById('deleteModal');
   modal.classList.remove('active');
-  setTimeout(() => modal.style.display = 'none', 300);
+  setTimeout(() => modal.style.display = 'none', 200);
 }
 
 
@@ -349,7 +351,7 @@ function openGuide() {
 function closeGuide() {
   const modal = document.getElementById('guideModal');
   modal.classList.remove('active');
-  setTimeout(() => modal.style.display = 'none', 300);
+  setTimeout(() => modal.style.display = 'none', 200);
 }
 
 
