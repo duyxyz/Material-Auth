@@ -374,8 +374,6 @@ export function openSettings() {
     const input = document.getElementById('uriInput');
     const error = document.getElementById('modalError');
 
-    document.getElementById('settingsBtn').classList.add('rotate');
-
     modal.style.display = 'block';
     modal.offsetHeight;
     modal.classList.add('active');
@@ -386,7 +384,6 @@ export function openSettings() {
 
 export function closeSettings() {
     const modal = document.getElementById('settingsModal');
-    document.getElementById('settingsBtn').classList.remove('rotate');
     modal.classList.remove('active');
     setTimeout(() => modal.style.display = 'none', 300);
 }

@@ -21,9 +21,16 @@ body {
     overflow: hidden;
 }
 
-/* Modern Slim Scrollbar */
+/* Hide Scrollbars */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 0px;
+    background: transparent;
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 ::-webkit-scrollbar-track {

@@ -336,12 +336,57 @@ function closeDeleteModal() {
   setTimeout(() => modal.style.display = 'none', 300);
 }
 
+
+// --- Guide Handlers ---
+
+function openGuide() {
+  const modal = document.getElementById('guideModal');
+  modal.style.display = 'block';
+  modal.offsetHeight;
+  modal.classList.add('active');
+}
+
+function closeGuide() {
+  const modal = document.getElementById('guideModal');
+  modal.classList.remove('active');
+  setTimeout(() => modal.style.display = 'none', 300);
+}
+
+
+// --- Sidebar Handlers ---
+
+function openSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  sidebar.classList.add('active');
+  backdrop.classList.add('active');
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  sidebar.classList.remove('active');
+  backdrop.classList.remove('active');
+}
+
 // --- Events ---
 
 function setupEventListeners() {
-  document.getElementById('settingsBtn').addEventListener('click', UI.openSettings);
   document.getElementById('closeSettingsBtn').addEventListener('click', UI.closeSettings);
-  document.getElementById('openGuideBtn').addEventListener('click', () => chrome.tabs.create({ url: 'pages/guide.html' }));
+
+  // Sidebar Listeners
+  document.getElementById('sidebarToggleBtn').addEventListener('click', openSidebar);
+  document.getElementById('closeSidebarBtn').addEventListener('click', closeSidebar);
+  document.getElementById('sidebarBackdrop').addEventListener('click', closeSidebar);
+  document.getElementById('sidebarSettingsBtn').addEventListener('click', () => {
+    closeSidebar();
+    UI.openSettings();
+  });
+  document.getElementById('sidebarGuideBtn').addEventListener('click', () => {
+    closeSidebar();
+    openGuide();
+  });
+  document.getElementById('closeGuideModalBtn').addEventListener('click', closeGuide);
 
   // GitHub Modal Listener
   const openGithubBtn = document.getElementById('openGithubBtn');

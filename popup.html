@@ -21,7 +21,9 @@
     <!-- Header with Search and Settings -->
     <div class="header">
       <div class="search-container">
-        <span class="material-icons search-icon">search</span>
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn">
+          <span class="material-icons">menu</span>
+        </button>
         <input type="text" id="searchInput" placeholder="Search accounts" class="search-input">
         <button class="clear-search" id="clearSearch" style="display: none;">
           <span class="material-icons" style="font-size: 16px;">close</span>
@@ -32,10 +34,6 @@
           <md-ripple></md-ripple>
         </button>
       </div>
-      <button class="settings-btn" id="settingsBtn">
-        <span class="material-icons">settings</span>
-        <md-ripple></md-ripple>
-      </button>
     </div>
 
     <div class="content">
@@ -55,6 +53,30 @@
 
       <div id="accountsList"></div>
     </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title">Menu</h2>
+        <button class="close-btn" id="closeSidebarBtn">
+          <span class="material-icons">close</span>
+          <md-ripple></md-ripple>
+        </button>
+      </div>
+      <div class="sidebar-content">
+        <div class="sidebar-item" id="sidebarSettingsBtn">
+          <span class="material-icons">settings</span>
+          <span>Settings</span>
+          <md-ripple></md-ripple>
+        </div>
+        <div class="sidebar-item" id="sidebarGuideBtn">
+          <span class="material-icons">help_outline</span>
+          <span>How to use?</span>
+          <md-ripple></md-ripple>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Main Settings Modal -->
@@ -63,11 +85,6 @@
       <div class="modal-header">
         <div class="modal-title-wrapper" style="flex: none;">
           <h2 style="margin: 0;">Settings</h2>
-          <button class="close-btn" id="openGuideBtn" title="How to use?"
-            style="margin-left: 8px; transform: none; display: flex; background: transparent;">
-            <span class="material-icons" style="font-size: 18px;">question_mark</span>
-            <md-ripple></md-ripple>
-          </button>
         </div>
 
         <div class="header-status-area"
@@ -107,8 +124,62 @@
     </div>
   </div>
 
+  <!-- Guide Modal -->
+  <div class="modal" id="guideModal" style="z-index: 1500;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title-wrapper" style="flex: none;">
+          <h2 style="margin: 0;">How to use?</h2>
+        </div>
+        <button class="close-btn" id="closeGuideModalBtn">
+          <span class="material-icons" style="font-size: 20px;">close</span>
+          <md-ripple></md-ripple>
+        </button>
+      </div>
+
+      <div class="guide-content" style="flex: 1; overflow-y: auto; padding-top: 10px;">
+        <section style="margin-bottom: 24px;">
+          <h3 style="font-size: 16px; margin-bottom: 8px; color: var(--accent-blue);">Introduction</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">Welcome to NovaOTP, a lightweight
+            and secure two-factor authentication (2FA) manager built directly into your browser.</p>
+        </section>
+
+        <section style="margin-bottom: 24px;">
+          <h3 style="font-size: 16px; margin-bottom: 8px; color: var(--accent-blue);">Manual Entry</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">Open <b>Settings</b> &rarr;
+            <b>Manual Entry</b>. Enter Account Name, Issuer, and Secret Key (Base32).
+          </p>
+        </section>
+
+        <section style="margin-bottom: 24px;">
+          <h3 style="font-size: 16px; margin-bottom: 8px; color: var(--accent-blue);">Google Import</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">Export from Google Authenticator,
+            scan QR to get the URL, and paste into <b>Google Import</b> tab.</p>
+        </section>
+
+        <section style="margin-bottom: 24px;">
+          <h3 style="font-size: 16px; margin-bottom: 8px; color: var(--accent-blue);">Management</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">• <b>Drag & Drop:</b> Use the
+            handle on each card to reorder.<br>
+            • <b>Swipe:</b> Right click and drag an item to Edit (left) or Delete (right).</p>
+        </section>
+
+        <section style="margin-bottom: 24px;">
+          <h3 style="font-size: 16px; margin-bottom: 8px; color: var(--accent-blue);">GitHub Backup</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">Sync securely to your GitHub Gist.
+            Data is encrypted with your <b>Backup Password</b> before upload.</p>
+        </section>
+
+        <p
+          style="text-align: center; color: var(--text-muted); font-size: 11px; margin-top: 20px; padding-bottom: 20px;">
+          &copy; 2026 NovaOTP. Built for privacy.
+        </p>
+      </div>
+    </div>
+  </div>
+
   <!-- Edit Modal (Full screen, limited scroll list) -->
-  <div class="modal" id="editModal" style="z-index: 1500; background: var(--bg-modal);">
+  <div class="modal" id="editModal" style="z-index: 1500;">
     <div class="modal-content"
       style="width: 100%; height: 100%; top: 0; left: 0; transform: none; border-radius: 0; padding: 24px; display: flex; flex-direction: column; bottom: 0;">
 
@@ -179,7 +250,7 @@
   </div>
 
   <!-- GitHub Backup Modal -->
-  <div class="modal" id="githubModal" style="z-index: 1500; background: var(--bg-modal);">
+  <div class="modal" id="githubModal" style="z-index: 1500;">
     <div class="modal-content">
 
       <!-- Header -->
@@ -218,19 +289,13 @@
           </button>
         </div>
 
-        <div class="info" style="margin-top: 16px; background: none; padding: 0;">
-
-          • <b>Token:</b> Must have <code>gist</code> permission.<br>
-          • <b>Sync:</b> Encrypts & syncs with Gist.<br>
-          • <b>Restore:</b> Requires backup password.<br>
-          • <b>Security:</b> AES-256 encryption.
-        </div>
       </div>
     </div>
   </div>
+  </div>
 
   <!-- Delete Modal -->
-  <div class="modal" id="deleteModal" style="z-index: 1500; background: var(--bg-modal);">
+  <div class="modal" id="deleteModal" style="z-index: 1500;">
     <div class="modal-content"
       style="width: 100%; height: 100%; top: 0; left: 0; transform: none; border-radius: 0; padding: 24px; display: flex; flex-direction: column; bottom: 0;">
 
