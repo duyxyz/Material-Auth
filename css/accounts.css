@@ -1,0 +1,252 @@
+.account-wrapper {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-modal);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.swipe-actions {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 0;
+}
+
+.swipe-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 80px;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.swipe-action.edit {
+    background: #4caf50;
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+.swipe-action.delete {
+    background: #f44336;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.account-item {
+    background: var(--bg-modal);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1);
+}
+
+.account-wrapper.long-pressing .account-item {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    opacity: 0.9;
+    z-index: 10;
+}
+
+.account-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    height: 1px;
+    background: var(--border-primary);
+}
+
+.account-wrapper:last-child .account-item::after {
+    display: none;
+}
+
+.account-item:active {
+    background: var(--bg-item-active);
+}
+
+.account-item:not(.no-active):active {
+    transform: scale(0.98);
+}
+
+/* Drag handle styles removed */
+
+.account-details-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+.account-info {
+    width: 100%;
+}
+
+.account-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+}
+
+.account-issuer {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.otp-display {
+    text-align: left;
+    margin-top: 2px;
+}
+
+.otp-code {
+    font-family: 'Roboto', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--accent-blue);
+    letter-spacing: 1px;
+}
+
+.account-item.copied {
+    animation: flash 0.3s ease-in-out;
+}
+
+.account-wrapper.dragging {
+    opacity: 0.4;
+    background: var(--bg-item-active);
+}
+
+/* Delete List */
+.delete-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.delete-list::-webkit-scrollbar {
+    display: none;
+}
+
+.delete-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.delete-list-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    height: 1px;
+    background: var(--border-primary);
+}
+
+.delete-list-item:last-child::after {
+    display: none;
+}
+
+.delete-list-item:active {
+    background: var(--bg-item-active);
+    transform: scale(0.98);
+}
+
+/* .delete-list-item:last-child {
+    border-bottom: none;
+} */
+
+.delete-list-item span {
+    font-size: 13px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* OTP Timer */
+.otp-timer {
+    width: 24px;
+    height: 24px;
+    margin-left: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timer-bg {
+    fill: none;
+    stroke: var(--border-primary);
+    stroke-width: 3;
+}
+
+.timer-progress {
+    fill: none;
+    stroke: var(--accent-blue);
+    stroke-width: 3;
+    transition: stroke-dashoffset 0.1s linear, stroke 0.2s;
+    stroke-linecap: round;
+}
+
+/* Edit Chips Layout */
+.edit-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 0;
+}
+
+.edit-chip {
+    padding: 8px 16px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-primary);
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+}
+
+.edit-chip:hover {
+    background: var(--bg-item-hover);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.edit-chip:active {
+    transform: scale(0.95);
+}

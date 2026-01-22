@@ -1,0 +1,125 @@
+/* Material Icons Local */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/icons/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') format('woff2');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 340px;
+    height: 516px;
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg-body);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+/* Modern Slim Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-primary);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #cbd5e1;
+}
+
+input,
+button,
+textarea {
+    font-family: 'Roboto', sans-serif;
+    outline: none;
+}
+
+.container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+    padding: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.content::-webkit-scrollbar {
+    display: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+}
+
+.empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    color: var(--text-secondary);
+}
+
+.empty-state h2 {
+    font-size: 16px;
+    margin-top: 16px;
+    color: var(--text-primary);
+}
+
+.empty-state p {
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

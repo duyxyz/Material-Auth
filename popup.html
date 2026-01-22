@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material Auth</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/core.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/accounts.css">
+  <link rel="stylesheet" href="css/modals.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header with Search and Settings -->
+    <div class="header">
+      <div class="search-container">
+        <span class="material-icons search-icon">search</span>
+        <input type="text" id="searchInput" placeholder="Search accounts" class="search-input">
+        <button class="clear-search" id="clearSearch" style="display: none;">
+          <span class="material-icons" style="font-size: 16px;">close</span>
+          <md-ripple></md-ripple>
+        </button>
+        <button class="clear-search" id="openGithubBtn" style="right: 0px; display: flex; position: absolute;">
+          <span class="material-icons" style="font-size: 20px;">account_circle</span>
+          <md-ripple></md-ripple>
+        </button>
+      </div>
+      <button class="settings-btn" id="settingsBtn">
+        <span class="material-icons">settings</span>
+        <md-ripple></md-ripple>
+      </button>
+    </div>
+
+    <div class="content">
+      <div id="emptyState" class="empty-state">
+        <span class="material-icons" style="font-size: 60px; color: #ccc; margin-bottom: 16px;">vpn_key</span>
+        <h2>No Accounts</h2>
+        <p>Click Settings to add accounts</p>
+      </div>
+
+      <div id="noResults" class="empty-state" style="display: none;">
+        <span class="material-icons" style="font-size: 60px; color: #ccc; margin-bottom: 16px;">search_off</span>
+        <h2>No Results Found</h2>
+        <p>Try different keywords</p>
+      </div>
+
+      <div id="accountsList"></div>
+    </div>
+  </div>
+
+  <!-- Main Settings Modal -->
+  <div class="modal" id="settingsModal" style="z-index: 1500;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title-wrapper" style="flex: none;">
+          <h2 style="margin: 0;">Settings</h2>
+          <button class="clear-search" id="openGuideBtn" title="How to use?"
+            style="margin-left: 8px; position: static; transform: none; display: flex;">
+            <span class="material-icons" style="font-size: 18px;">question_mark</span>
+            <md-ripple></md-ripple>
+          </button>
+        </div>
+
+        <div class="header-status-area"
+          style="flex: 1; display: flex; align-items: center; justify-content: flex-end; padding: 0 12px; min-width: 0; overflow: hidden;">
+          <div id="modalError"
+            style="color: var(--accent-danger); font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;">
+          </div>
+        </div>
+
+        <button class="close-btn" id="closeSettingsBtn">
+          <span class="material-icons" style="font-size: 20px;">close</span>
+          <md-ripple></md-ripple>
+        </button>
+      </div>
+
+      <div class="settings-section">
+        <div class="tabs">
+          <button class="tab active" data-tab="manual">Manual Entry<md-ripple></md-ripple></button>
+          <button class="tab" data-tab="google">Google Import<md-ripple></md-ripple></button>
+        </div>
+
+        <div id="tab-manual" class="tab-content active">
+          <input type="text" id="manualName" placeholder="Account Name (Email/User)">
+          <input type="text" id="manualIssuer" placeholder="Issuer (e.g. Google, Facebook)">
+          <input type="text" id="manualSecret" placeholder="Secret Key (Base32)" style="font-family: monospace;">
+          <button class="btn" id="submitManualBtn">Add Account<md-ripple></md-ripple></button>
+
+          <div class="info" style="margin-top: 16px; font-size: 12px; line-height: 1.5; background: none; padding: 0;">
+
+            • <b>Account Name:</b> Your account label.<br>
+            • <b>Issuer:</b> Service name (Google, etc).<br>
+            • <b>Secret Key:</b> 2FA Base32 string.<br>
+            • <b>Security:</b><br>
+            &nbsp; Keep your secret key safe.<br>
+            &nbsp; Never share it with anyone.<br>
+            &nbsp; Check accuracy before saving.
+          </div>
+        </div>
+
+        <div id="tab-google" class="tab-content">
+          <textarea id="uriInput" placeholder="Paste otpauth-migration:// URI here..."
+            style="font-size: 12px;"></textarea>
+          <button class="btn" id="submitBtn">Import from Google<md-ripple></md-ripple></button>
+          <div class="info" style="margin-top: 16px; font-size: 12px; line-height: 1.5; background: none; padding: 0;">
+
+            1. Open Authenticator → <b>Settings</b>.<br>
+            2. Choose <b>Transfer</b> → <b>Export</b>.<br>
+            3. Select & take photo of <b>QR</b>.<br>
+            4. Scan QR for <b>otpauth</b> link.<br>
+            • Use a secure scanner app.<br>
+            • Only import from trusted codes.<br>
+            • Delete photo after scan.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal (Full screen, limited scroll list) -->
+  <div class="modal" id="editModal" style="z-index: 1500; background: var(--bg-modal);">
+    <div class="modal-content"
+      style="width: 100%; height: 100%; top: 0; left: 0; transform: none; border-radius: 0; padding: 24px; display: flex; flex-direction: column; bottom: 0;">
+
+      <!-- Synchronized Header -->
+      <div class="modal-header">
+        <h3>Select Account</h3>
+        <div
+          style="flex: 1; display: flex; align-items: center; justify-content: flex-end; padding: 0 12px; min-width: 0; overflow: hidden;">
+          <div id="editMsg"
+            style="font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;">
+          </div>
+        </div>
+        <button class="close-btn" id="closeEditModalBtn"><span
+            class="material-icons">close</span><md-ripple></md-ripple></button>
+      </div>
+
+      <div id="editListContainer" style="display: flex; flex-direction: column; flex: 1; min-height: 0;">
+        <div id="editList" class="edit-chips-container" style="flex: 1; overflow-y: auto; margin-bottom: 0;">
+        </div>
+      </div>
+
+      <div id="editFormContainer" style="display: none; flex-direction: column; height: 100%;">
+        <div
+          style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; flex-shrink: 0;">
+          <h3 style="font-size: 18px; font-weight: 600;">Edit details</h3>
+        </div>
+        <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px;">
+          <input type="hidden" id="editAccountIndex">
+          <label style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">Account Name</label>
+          <input type="text" id="editName" placeholder="Account Name">
+          <label style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">Issuer</label>
+          <input type="text" id="editIssuer" placeholder="Issuer">
+          <label style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">Secret Key</label>
+          <input type="text" id="editSecret" placeholder="Secret Key" style="font-family: monospace;">
+        </div>
+        <button class="btn" id="saveEditBtn"
+          style="margin-top: auto; height: 48px; font-weight: 600; flex-shrink: 0;">Save
+          Changes<md-ripple></md-ripple></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" id="confirmModal" style="z-index: 2000;">
+    <div class="modal-content"
+      style="height: auto; width: 90%; max-width: 320px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 16px; bottom: auto; padding: 24px;">
+      <div style="text-align: center;">
+        <div
+          style="background: rgba(239, 68, 68, 0.1); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+          <span class="material-icons" style="font-size: 32px; color: #ef4444;">help_outline</span>
+        </div>
+        <h3>Confirm Action</h3>
+        <p id="confirmMessage"
+          style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; line-height: 1.5;">Are you sure?
+        </p>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn" id="cancelDeleteBtn"
+            style="background: var(--bg-body); color: var(--text-secondary); flex: 1;">Cancel<md-ripple></md-ripple></button>
+          <button class="btn btn-danger" id="confirmDeleteBtn" style="margin: 0; flex: 1;"><span
+              class="btn-text">Confirm</span><md-ripple></md-ripple></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GitHub Backup Modal -->
+  <div class="modal" id="githubModal" style="z-index: 1500; background: var(--bg-modal);">
+    <div class="modal-content">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <h3>Cloud Backup</h3>
+        <div
+          style="flex: 1; display: flex; align-items: center; justify-content: flex-end; padding: 0 12px; min-width: 0; overflow: hidden;">
+          <div id="githubMsg"
+            style="color: var(--accent-blue); font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;">
+          </div>
+        </div>
+        <button class="close-btn" id="closeGithubModalBtn"><span
+            class="material-icons">close</span><md-ripple></md-ripple></button>
+      </div>
+
+      <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column;">
+        <div style="margin-bottom: 12px;">
+          <label
+            style="font-size: 12px; font-weight: 600; color: var(--text-primary); display: block; margin-bottom: 5px;">GitHub
+            Personal Access Token</label>
+          <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" style="margin-bottom: 5px;">
+          <div style="font-size: 11px; color: var(--text-secondary);">Token needs <strong>gist</strong> scope.</div>
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          <label
+            style="font-size: 12px; font-weight: 600; color: var(--text-primary); display: block; margin-bottom: 5px;">Backup
+            Password</label>
+          <input type="password" id="githubPassword" placeholder="Enter password to encrypt/decrypt"
+            style="margin-bottom: 5px;">
+          <div style="font-size: 11px; color: var(--text-secondary);">Don't lose this! You need it to restore.</div>
+        </div>
+
+        <div style="margin-bottom: 8px;">
+          <label
+            style="font-size: 12px; font-weight: 600; color: var(--text-primary); display: block; margin-bottom: 5px;">Gist
+            ID (Optional)</label>
+          <input type="text" id="githubProjectNumber" placeholder="Leave empty for auto-detect"
+            style="margin-bottom: 5px;">
+          <div style="font-size: 11px; color: var(--text-secondary);">Auto-creates or finds your Material Auth gist.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 8px; flex-shrink: 0;">
+          <button class="btn" id="githubBackupBtn"
+            style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <span class="material-icons" style="font-size: 18px;">cloud_upload</span>
+            <span>Backup</span>
+            <md-ripple></md-ripple>
+          </button>
+          <button class="btn btn-icon" id="githubRestoreBtn" style="flex: 1;">
+            <span class="material-icons" style="font-size: 18px;">cloud_download</span>
+            <span>Restore</span>
+            <md-ripple></md-ripple>
+          </button>
+        </div>
+
+        <div class="info" style="margin-top: 16px; background: none; padding: 0;">
+
+          • <b>Token:</b> Must have <code>gist</code> permission.<br>
+          • <b>Sync:</b> Encrypts & syncs with Gist.<br>
+          • <b>Restore:</b> Requires backup password.<br>
+          • <b>Security:</b> AES-256 encryption.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal" id="deleteModal" style="z-index: 1500; background: var(--bg-modal);">
+    <div class="modal-content"
+      style="width: 100%; height: 100%; top: 0; left: 0; transform: none; border-radius: 0; padding: 24px; display: flex; flex-direction: column; bottom: 0;">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <h3>Delete Accounts</h3>
+        <button class="close-btn" id="closeDeleteModalBtn"><span
+            class="material-icons">close</span><md-ripple></md-ripple></button>
+      </div>
+
+      <div style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
+        <div id="deleteList" class="delete-list"
+          style="flex: 1; overflow-y: auto; border: 1px solid var(--border-primary); border-radius: 12px; margin-bottom: 0;">
+        </div>
+      </div>
+
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; margin: 16px -24px -24px -24px; border-top: 1px solid var(--border-primary); background: var(--bg-modal); flex-shrink: 0;">
+        <label
+          style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--text-primary); cursor: pointer;">
+          <input type="checkbox" id="selectAllCheckbox"> Select All
+        </label>
+        <button class="btn btn-danger" id="deleteSelectedBtn"
+          style="width: auto; padding: 8px 16px; font-size: 13px; margin: 0;">Delete
+          Selected<md-ripple></md-ripple></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/libs/ripple.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
