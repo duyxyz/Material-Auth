@@ -40,13 +40,15 @@
 
     <div class="content">
       <div id="emptyState" class="empty-state">
-        <span class="material-icons" style="font-size: 60px; color: #ccc; margin-bottom: 16px;">vpn_key</span>
+        <span class="material-icons"
+          style="font-size: 60px; color: var(--text-muted); margin-bottom: 16px;">vpn_key</span>
         <h2>No Accounts</h2>
         <p>Click Settings to add accounts</p>
       </div>
 
       <div id="noResults" class="empty-state" style="display: none;">
-        <span class="material-icons" style="font-size: 60px; color: #ccc; margin-bottom: 16px;">search_off</span>
+        <span class="material-icons"
+          style="font-size: 60px; color: var(--text-muted); margin-bottom: 16px;">search_off</span>
         <h2>No Results Found</h2>
         <p>Try different keywords</p>
       </div>
@@ -92,14 +94,14 @@
           <md-outlined-text-field id="manualIssuer" label="Issuer (e.g. Google, Facebook)"></md-outlined-text-field>
           <md-outlined-text-field id="manualSecret" label="Secret Key (Base32)"
             style="font-family: monospace;"></md-outlined-text-field>
-          <button class="btn" id="submitManualBtn">Add Account<md-ripple></md-ripple></button>
+          <button class="btn" id="submitManualBtn"><span>Add Account</span><md-ripple></md-ripple></button>
 
         </div>
 
         <div id="tab-google" class="tab-content">
           <md-outlined-text-field type="textarea" id="uriInput" label="Paste otpauth-migration:// URI here..."
             rows="4"></md-outlined-text-field>
-          <button class="btn" id="submitBtn">Import from Google<md-ripple></md-ripple></button>
+          <button class="btn" id="submitBtn"><span>Import from Google</span><md-ripple></md-ripple></button>
         </div>
       </div>
     </div>
@@ -142,8 +144,8 @@
             style="font-family: monospace;"></md-outlined-text-field>
         </div>
         <button class="btn" id="saveEditBtn"
-          style="margin-top: auto; height: 48px; font-weight: 600; flex-shrink: 0;">Save
-          Changes<md-ripple></md-ripple></button>
+          style="margin-top: auto; height: 48px; font-weight: 600; flex-shrink: 0;"><span>Save
+            Changes</span><md-ripple></md-ripple></button>
       </div>
     </div>
   </div>
@@ -161,11 +163,16 @@
         <p id="confirmMessage"
           style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; line-height: 1.5;">Are you sure?
         </p>
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; margin-top: 16px;">
           <button class="btn" id="cancelDeleteBtn"
-            style="background: var(--bg-body); color: var(--text-secondary); flex: 1;">Cancel<md-ripple></md-ripple></button>
-          <button class="btn btn-danger" id="confirmDeleteBtn" style="margin: 0; flex: 1;"><span
-              class="btn-text">Confirm</span><md-ripple></md-ripple></button>
+            style="background: var(--bg-input); color: var(--text-secondary); flex: 1; margin: 0;">
+            <span>Cancel</span>
+            <md-ripple></md-ripple>
+          </button>
+          <button class="btn btn-danger" id="confirmDeleteBtn" style="flex: 1; margin: 0;">
+            <span>Confirm</span>
+            <md-ripple></md-ripple>
+          </button>
         </div>
       </div>
     </div>
@@ -198,14 +205,13 @@
         <md-outlined-text-field id="githubProjectNumber" label="Gist ID (Optional)"
           supporting-text="Auto-creates or finds your Material Auth gist"></md-outlined-text-field>
 
-        <div style="display: flex; gap: 10px; margin-top: 8px; flex-shrink: 0;">
-          <button class="btn" id="githubBackupBtn"
-            style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <div style="display: flex; gap: 10px; margin-top: 16px; flex-shrink: 0;">
+          <button class="btn" id="githubBackupBtn" style="flex: 1; margin: 0;">
             <span class="material-icons" style="font-size: 18px;">cloud_upload</span>
             <span>Backup</span>
             <md-ripple></md-ripple>
           </button>
-          <button class="btn btn-icon" id="githubRestoreBtn" style="flex: 1;">
+          <button class="btn" id="githubRestoreBtn" style="flex: 1; margin: 0;">
             <span class="material-icons" style="font-size: 18px;">cloud_download</span>
             <span>Restore</span>
             <md-ripple></md-ripple>
@@ -248,8 +254,8 @@
           <input type="checkbox" id="selectAllCheckbox"> Select All
         </label>
         <button class="btn btn-danger" id="deleteSelectedBtn"
-          style="width: auto; padding: 8px 16px; font-size: 13px; margin: 0;">Delete
-          Selected<md-ripple></md-ripple></button>
+          style="width: auto; padding: 8px 16px; font-size: 13px; margin: 0;"><span>Delete
+            Selected</span><md-ripple></md-ripple></button>
       </div>
     </div>
   </div>

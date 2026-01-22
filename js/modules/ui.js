@@ -437,21 +437,36 @@ export function setGitHubStatus(message, type = 'info') {
     }, 4000);
 }
 
-export function openConfirmModal({ title, message, confirmText, onConfirm }) {
+export function openConfirmModal({ title, message, confirmText, onConfirm, confirmColor, icon }) {
     const modal = document.getElementById('confirmModal');
     const titleEl = modal.querySelector('h3');
     const messageEl = document.getElementById('confirmMessage');
     const confirmBtn = document.getElementById('confirmDeleteBtn');
+    const iconContainer = modal.querySelector('.material-icons').parentElement;
+    const iconEl = modal.querySelector('.material-icons');
 
     titleEl.innerText = title;
     messageEl.innerText = message;
 
-    // Update text while preserving <md-ripple> if it exists
-    const btnText = confirmBtn.querySelector('.btn-text');
-    if (btnText) {
-        btnText.innerText = confirmText;
+    // Update icon and color if provided
+    if (icon) iconEl.innerText = icon;
+    if (confirmColor) {
+        confirmBtn.style.background = confirmColor;
+        confirmBtn.classList.remove('btn-danger'); // Remove default red if custom color provided
+        iconContainer.style.background = `${confirmColor}1a`; // 10% opacity for icon bg
+        iconEl.style.color = confirmColor;
     } else {
-        confirmBtn.innerText = confirmText;
+        confirmBtn.style.background = ''; // Revert to CSS
+        confirmBtn.classList.add('btn-danger');
+        iconContainer.style.background = 'rgba(239, 68, 68, 0.1)';
+        iconEl.style.color = '#ef4444';
+        iconEl.innerText = 'help_outline';
+    }
+
+    // Update text
+    const textEl = confirmBtn.querySelector('span');
+    if (textEl) {
+        textEl.innerText = confirmText;
     }
 
     confirmBtn.onclick = () => {

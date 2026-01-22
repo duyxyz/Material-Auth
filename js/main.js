@@ -211,7 +211,7 @@ async function handleGitHubBackup() {
     title: 'Backup to GitHub',
     message: 'Overwrite existing backup for this password?',
     confirmText: 'Backup',
-    confirmColor: '#3b82f6',
+    confirmColor: '#8ab4f8',
     icon: 'cloud_upload',
     onConfirm: async () => {
       UI.setGitHubStatus('Backing up...');
@@ -243,7 +243,7 @@ async function handleGitHubRestore() {
     title: 'Restore from GitHub',
     message: 'COMPLETELY OVERWRITE local data?',
     confirmText: 'Restore',
-    confirmColor: '#166534',
+    confirmColor: '#81c995',
     icon: 'cloud_download',
     onConfirm: async () => {
       UI.setGitHubStatus('Restoring...');

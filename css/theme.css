@@ -1,67 +1,34 @@
 :root {
-    /* light mode - google material palette */
-    --bg-body: #ffffff;
-    --bg-card: #ffffff;
-    --bg-header: #ffffff;
-    --bg-input: #f1f3f4;
-    --bg-input-focus: #ffffff;
-    --bg-modal: #ffffff;
-    --bg-tab-active: #e8f0fe;
-    /* Google Blue 50 */
-    --bg-tab-hover: #f1f3f4;
-    --bg-item-hover: #e8eaed;
-    --text-primary: #202124;
-    /* Google Grey 900 */
-    --text-secondary: #5f6368;
-    /* Google Grey 700 */
-    --text-muted: #80868b;
-    --border-primary: #dadce0;
-    /* Google Grey 300 */
-    --border-input: #dadce0;
-    --accent-blue: #1a73e8;
-    /* Google Blue 600 */
-    --accent-blue-hover: #174ea6;
-    --accent-danger: #d93025;
-    /* Google Red 600 */
-    --accent-danger-hover: #b31412;
-    --bg-item-active: #e8f0fe;
-    --ripple-bg: rgba(26, 115, 232, 0.1);
-    --shadow-sm: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-}
+    /* dark mode - user specific palette */
+    --bg-body: #1f2020;
+    --bg-header: #1f2020;
+    --bg-card: #1f2020;
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        /* dark mode - user specific palette */
-        --bg-body: #1f2020;
-        --bg-header: #1f2020;
-        --bg-card: #1f2020;
+    /* Modal background */
+    --bg-modal: #1f2020;
 
-        /* Modal background */
-        --bg-modal: #1f2020;
+    /* Surfaces (Inputs, Buttons, Tabs) */
+    --bg-input: #282828;
+    --bg-input-focus: #282828;
 
-        /* Surfaces (Inputs, Buttons, Tabs) */
-        --bg-input: #282828;
-        --bg-input-focus: #282828;
+    --bg-tab-active: #282828;
+    --bg-tab-hover: #35363b;
+    /* Hover state */
 
-        --bg-tab-active: #282828;
-        --bg-tab-hover: #35363b;
-        /* Hover state */
+    --bg-item-hover: #35363b;
+    --bg-item-active: #282828;
 
-        --bg-item-hover: #35363b;
-        --bg-item-active: #282828;
+    --text-primary: #e8eaed;
+    --text-secondary: #9aa0a6;
+    --text-muted: #9aa0a6;
 
-        --text-primary: #e8eaed;
-        --text-secondary: #9aa0a6;
-        --text-muted: #9aa0a6;
+    /* Borders should blend or be the lighter shade */
+    --border-primary: #444746;
+    --border-input: #444746;
 
-        /* Borders should blend or be the lighter shade */
-        --border-primary: #444746;
-        --border-input: #444746;
-
-        --accent-blue: #8ab4f8;
-        --accent-blue-hover: #aecbfa;
-        --accent-danger: #f28b82;
-        --ripple-bg: rgba(255, 255, 255, 0.08);
-        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
-    }
+    --accent-blue: #8ab4f8;
+    --accent-blue-hover: #aecbfa;
+    --accent-danger: #f28b82;
+    --ripple-bg: rgba(255, 255, 255, 0.08);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
 }
