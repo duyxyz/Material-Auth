@@ -241,11 +241,7 @@
     overflow: hidden;
 }
 
-.edit-chip:hover {
-    background: var(--bg-item-hover);
-    border-color: var(--accent-blue);
-    color: var(--accent-blue);
-}
+
 
 .edit-chip:active {
     transform: scale(0.95);

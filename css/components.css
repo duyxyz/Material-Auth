@@ -50,6 +50,7 @@
     background: var(--bg-input-focus);
 }
 
+
 .clear-search {
     position: absolute;
     right: 10px;
@@ -70,9 +71,7 @@
     overflow: hidden;
 }
 
-.clear-search:hover {
-    background: var(--bg-item-hover);
-}
+
 
 /* Buttons */
 .btn {
@@ -92,21 +91,17 @@
     gap: 8px;
     position: relative;
     overflow: hidden;
+    margin-top: 8px;
+    /* Sync with inputs */
 }
 
-.btn:hover {
-    opacity: 0.9;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+
 
 .btn-danger {
     background: var(--accent-danger);
-    margin-top: 12px;
 }
 
-.btn-danger:hover {
-    background: var(--accent-danger-hover);
-}
+
 
 .settings-btn {
     background: var(--bg-input);
@@ -125,9 +120,7 @@
     overflow: hidden;
 }
 
-.settings-btn:hover {
-    background: var(--bg-item-hover);
-}
+
 
 .settings-btn.rotate {
     transform: rotate(90deg);
@@ -150,9 +143,7 @@
     overflow: hidden;
 }
 
-.close-btn:hover {
-    background: var(--bg-item-hover);
-}
+
 
 /* Tabs */
 .tabs {
@@ -179,48 +170,72 @@
     overflow: hidden;
 }
 
-.tab:hover {
-    background: var(--bg-tab-hover);
-    color: var(--text-secondary);
-}
+
 
 .tab.active {
     background: var(--bg-tab-active);
     color: var(--accent-blue);
 }
 
-/* Inputs */
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="number"] {
+/* Material Text Fields */
+md-outlined-text-field {
     width: 100%;
-    height: 44px;
-    padding: 12px;
-    border: 1px solid var(--border-input);
-    border-radius: 8px;
-    font-size: 13px;
-    background: var(--bg-input);
-    color: var(--text-primary);
-    transition: border-color 0.2s;
-    margin-bottom: 12px;
+    --md-outlined-text-field-container-shape: 8px;
+
+    /* Theme Colors & Overrides */
+    --md-outlined-text-field-outline-color: var(--border-input);
+    --md-outlined-text-field-focus-outline-color: var(--accent-blue);
+    --md-outlined-text-field-hover-outline-color: var(--border-input);
+    --md-outlined-text-field-label-text-color: var(--text-secondary);
+    --md-outlined-text-field-focus-label-text-color: var(--accent-blue);
+    --md-outlined-text-field-input-text-color: var(--text-primary);
+    --md-outlined-text-field-caret-color: var(--accent-blue);
+
+    /* Material 3 System Tokens */
+    --md-sys-color-primary: var(--accent-blue);
+    --md-sys-color-on-surface: var(--text-primary);
+    --md-sys-color-on-surface-variant: var(--text-secondary);
+    --md-sys-color-outline: var(--border-input);
+    --md-sys-color-outline-variant: var(--border-input);
+
+    /* Compact Layout - Uses padding to reach ~44px height */
+    --md-outlined-text-field-top-space: 10px;
+    --md-outlined-text-field-bottom-space: 10px;
+    --md-outlined-text-field-input-text-size: 13px;
+    --md-outlined-text-field-label-text-size: 13px;
+
+    /* Spacing logic: 8px margin + 4px gap = 12px consistent spacing */
+    margin-top: 8px !important;
+    margin-bottom: 0 !important;
 }
 
+/* Specific height for Google Import textarea - 156px */
+#uriInput {
+    height: 156px !important;
+    min-height: 156px !important;
+    max-height: 156px !important;
+    width: 100% !important;
+    --md-outlined-text-field-input-text-family: monospace;
+}
+
+/* Specific fix for purple floating label and focus */
+md-outlined-text-field:focus-within {
+    --md-outlined-text-field-label-text-color: var(--accent-blue);
+}
+
+/* Global Ripple Hover Disable */
+md-ripple {
+    --md-ripple-hover-opacity: 0;
+}
+
+
+
+/* Hide original inputs that are now replaced */
+input[type="text"]:not([id="searchInput"]),
+input[type="password"],
+input[type="number"],
 textarea {
-    height: 156px;
-    /* 3*44 + 2*12 = 156 to align with manual inputs */
-    flex: none;
-    resize: none;
-    font-family: monospace;
-}
-
-textarea:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="number"]:focus {
-    outline: none;
-    border-color: var(--accent-blue);
-    background: var(--bg-input-focus);
+    display: none;
 }
 
 /* Checkbox */

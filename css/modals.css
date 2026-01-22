@@ -80,6 +80,8 @@
     flex: 1;
     flex-direction: column;
     min-height: 0;
+    gap: 4px;
+    padding-top: 4px;
 }
 
 .tab-content.active {
