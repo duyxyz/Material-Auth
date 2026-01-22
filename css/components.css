@@ -145,36 +145,39 @@
 
 
 
-/* Tabs */
-.tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
+/* Material Tabs */
+md-tabs {
+    display: block;
+    height: 48px;
+    --md-sys-color-primary: var(--accent-blue);
+    --md-sys-color-surface: transparent;
+    --md-sys-color-on-surface: var(--text-primary);
+    --md-sys-color-on-surface-variant: var(--text-muted);
+    margin: 0 -24px 12px -24px;
+    /* Stretch to modal edges */
     border-bottom: 1px solid var(--border-primary);
-    padding-bottom: 16px;
 }
 
-.tab {
+md-primary-tab {
+    height: 48px;
     flex: 1;
-    background: none;
-    border: none;
-    padding: 8px 12px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-muted);
-    cursor: pointer;
-    border-radius: 6px;
-    transition: all 0.2s;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
+    --md-primary-tab-active-indicator-color: var(--accent-blue);
+    --md-primary-tab-active-label-text-color: var(--accent-blue);
+    --md-primary-tab-label-text-color: var(--text-muted);
 
+    /* Remove Hover Effects */
+    --md-primary-tab-hover-state-layer-opacity: 0;
+    --md-primary-tab-active-hover-state-layer-opacity: 0;
+    --md-primary-tab-hover-label-text-color: var(--text-muted);
+    --md-primary-tab-active-hover-label-text-color: var(--accent-blue);
 
+    /* Support other interaction states if needed to be consistent */
+    --md-primary-tab-focus-label-text-color: var(--text-muted);
+    --md-primary-tab-active-focus-label-text-color: var(--accent-blue);
 
-.tab.active {
-    background: var(--bg-tab-active);
-    color: var(--accent-blue);
+    --md-primary-tab-label-text-size: 13px;
+    --md-primary-tab-label-text-weight: 600;
+    --md-primary-tab-container-color: transparent;
 }
 
 /* Material Text Fields */

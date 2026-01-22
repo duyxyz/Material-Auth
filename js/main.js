@@ -389,15 +389,18 @@ function setupEventListeners() {
     UI.filterAccounts(accounts, currentSearchQuery);
   });
 
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const settingsTabs = document.getElementById('settingsTabs');
+  if (settingsTabs) {
+    settingsTabs.addEventListener('change', () => {
+      const index = settingsTabs.activeTabIndex;
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      const target = document.getElementById(`tab-${tab.dataset.tab}`);
-      if (target) target.classList.add('active');
+      if (index === 0) {
+        document.getElementById('tab-manual').classList.add('active');
+      } else {
+        document.getElementById('tab-google').classList.add('active');
+      }
     });
-  });
+  }
 }
 
 init();

@@ -82,10 +82,10 @@
       </div>
 
       <div class="settings-section">
-        <div class="tabs">
-          <button class="tab active" data-tab="manual">Manual Entry<md-ripple></md-ripple></button>
-          <button class="tab" data-tab="google">Google Import<md-ripple></md-ripple></button>
-        </div>
+        <md-tabs id="settingsTabs">
+          <md-primary-tab id="tab-manual-btn" md-tab active>Manual Entry</md-primary-tab>
+          <md-primary-tab id="tab-google-btn" md-tab>Google Import</md-primary-tab>
+        </md-tabs>
 
         <div id="tab-manual" class="tab-content active">
           <md-outlined-text-field id="manualName" label="Account Name (Email/User)"></md-outlined-text-field>
@@ -254,8 +254,8 @@
     </div>
   </div>
 
-  <script src="js/libs/ripple.js"></script>
   <script src="js/libs/material-text-field.js"></script>
+  <script src="js/libs/material-tabs.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>
 

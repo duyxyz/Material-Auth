@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Material Auth",
   "version": "1.1",
-  "description": "Simple, secure, and powerful two-factor authentication management for your browser.",
+  "description": "Open-source 2FA Authenticator built with Material Design. Secure, private, and compatible with Google Authenticator migration URIs.",
   "permissions": [
     "storage"
   ],
